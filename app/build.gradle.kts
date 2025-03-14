@@ -51,4 +51,5 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
     implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
     implementation ("com.google.android.exoplayer:exoplayer:2.19.1")
+    implementation ("com.google.code.gson:gson:2.10.1")
 }
