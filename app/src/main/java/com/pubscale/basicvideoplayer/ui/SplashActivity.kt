@@ -1,5 +1,6 @@
 package com.pubscale.basicvideoplayer.ui
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
@@ -15,6 +16,7 @@ import kotlinx.coroutines.launch
  * SplashActivity is the launch screen of the application.
  * It displays a splash screen for 2 seconds before navigating to MainActivity.
  */
+@SuppressLint("CustomSplashScreen")
 class SplashActivity : AppCompatActivity() {
 
     /**
@@ -30,8 +32,7 @@ class SplashActivity : AppCompatActivity() {
 
         // Launches a coroutine within the lifecycleScope to handle the delay.
         lifecycleScope.launch {
-            delay(2000) // Waits for 2 seconds before proceeding.
-
+            delay(3000) // Waits for 2 seconds before proceeding.
             // Creates an intent to start MainActivity.
             val intent = Intent(this@SplashActivity, MainActivity::class.java)
             startActivity(intent) // Starts MainActivity.

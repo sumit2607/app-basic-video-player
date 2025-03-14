@@ -43,6 +43,7 @@ class MainActivity : AppCompatActivity() {
      */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.activity_main)
 
         // Initialize UI components
@@ -50,7 +51,7 @@ class MainActivity : AppCompatActivity() {
         shimmerLayout = findViewById(R.id.shimmerLayout)
 
         // Initialize ViewModel with repository and factory
-        val repository = VideoRepository()
+        val repository = VideoRepository(this)
         val factory = VideoViewModelFactory(repository)
         viewModel = ViewModelProvider(this, factory)[VideoViewModel::class.java]
 
@@ -128,24 +129,42 @@ class MainActivity : AppCompatActivity() {
      */
     override fun onUserLeaveHint() {
         super.onUserLeaveHint()
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val aspectRatio = Rational(playerView.width, playerView.height)
-            val pipParams = PictureInPictureParams.Builder()
-                .setAspectRatio(aspectRatio)
-                .build()
-            enterPictureInPictureMode(pipParams)
+            playerView.post {
+                val width = playerView.width
+                val height = playerView.height
+
+                if (width > 0 && height > 0) {
+                    val aspectRatio = Rational(width, height)
+
+                    val pipParams = PictureInPictureParams.Builder()
+                        .setAspectRatio(aspectRatio)
+                        .build()
+
+                    // Ensure the player continues playing
+                    if (!player!!.isPlaying) {
+                        player!!.playWhenReady = true
+                    }
+
+                    enterPictureInPictureMode(pipParams)
+                }
+            }
         }
     }
 
-    /**
-     * Overrides the back button to enter Picture-in-Picture (PiP) mode on supported devices.
-     */
+
+
+
     override fun onBackPressed() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            enterPictureInPictureMode(PictureInPictureParams.Builder().build())
-        } else {
-            super.onBackPressed()
-        }
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//            enterPictureInPictureMode(PictureInPictureParams.Builder().build())
+//        } else {
+//            super.onBackPressed()
+//        }
+        super.onBackPressed()
+        finish()
+
     }
 
     /**
