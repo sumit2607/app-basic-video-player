@@ -9,6 +9,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.util.Rational
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
@@ -17,6 +18,7 @@ import androidx.media3.common.MediaMetadata
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.exoplayer.DefaultLoadControl
 import androidx.media3.ui.PlayerView
+import com.facebook.shimmer.ShimmerFrameLayout
 import com.pubscale.basicvideoplayer.R
 import com.pubscale.basicvideoplayer.repo.VideoRepository
 import com.pubscale.basicvideoplayer.viewmodel.VideoViewModel
@@ -25,6 +27,7 @@ import java.io.ByteArrayOutputStream
 
 class MainActivity : AppCompatActivity() {
     private var player: ExoPlayer? = null
+    private var shimmerLayout: ShimmerFrameLayout? = null
     private lateinit var playerView: PlayerView
     private lateinit var viewModel: VideoViewModel
 
@@ -33,12 +36,15 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         playerView = findViewById(R.id.player_view)
+        shimmerLayout = findViewById(R.id.shimmerLayout)
 
         val repository = VideoRepository()
         val factory = VideoViewModelFactory(repository)
-        viewModel = ViewModelProvider(this, factory).get(VideoViewModel::class.java)
+        viewModel = ViewModelProvider(this, factory)[VideoViewModel::class.java]
 
         viewModel.videoUrl.observe(this) { videoUrl ->
+            shimmerLayout?.stopAndHide()
+            playerView.visibility = View.VISIBLE
             setupExoPlayer(videoUrl)
         }
 
@@ -119,4 +125,10 @@ class MainActivity : AppCompatActivity() {
         player?.release()
         player = null
     }
+
+    fun ShimmerFrameLayout?.stopAndHide() {
+        this?.stopShimmer()
+        this?.visibility = View.GONE
+    }
+
 }

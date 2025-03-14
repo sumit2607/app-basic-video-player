@@ -7,11 +7,33 @@
     android:layout_height="match_parent"
     tools:context=".ui.MainActivity">
 
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/shimmerLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:layout_marginBottom="100dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:shimmer_auto_start="true"
+        app:shimmer_duration="1000"
+        android:background="#F5F5F5"
+        app:shimmer_intensity="0.5">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/ic_launcher_foreground"
+             />
+    </com.facebook.shimmer.ShimmerFrameLayout>
+
     <androidx.media3.ui.PlayerView
         android:id="@+id/player_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:resize_mode="fit"
+        android:visibility="gone"
         app:use_controller="true" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,20 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="100dp"
+    android:height="100dp"
+    android:viewportWidth="100"
+    android:viewportHeight="100">
+
+    <!-- Base Triangle -->
+    <path
+        android:fillColor="#FFA500"
+        android:pathData="M50,5 L95,85 L5,85 Z" />
+
+    <!-- White Stripes -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M50,20 L80,75 L20,75 Z" />
+
+    <path
+        android:fillColor="#FFA500"
+        android:pathData="M50,40 L70,75 L30,75 Z" />
+</vector>
